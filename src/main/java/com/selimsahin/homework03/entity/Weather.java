@@ -13,6 +13,7 @@ public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String requestedCityName;
     private String cityName;
     private String countryName;
     private Integer temperature;
@@ -46,8 +47,9 @@ public class Weather {
     public Weather() {
     }
 
-    public Weather(Long id, String cityName, String countryName, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
+    public Weather(Long id, String requestedCityName, String cityName, String countryName, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
         this.id = id;
+        this.requestedCityName = requestedCityName;
         this.cityName = cityName;
         this.countryName = countryName;
         this.temperature = temperature;
@@ -55,8 +57,9 @@ public class Weather {
         this.responseLocalTime = responseLocalTime;
     }
 
-    public Weather(String cityName, String countryName, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
+    public Weather(String requestedCityName, String cityName, String countryName, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
         this.id = null; // id is auto-generated
+        this.requestedCityName = requestedCityName;
         this.cityName = cityName;
         this.countryName = countryName;
         this.temperature = temperature;

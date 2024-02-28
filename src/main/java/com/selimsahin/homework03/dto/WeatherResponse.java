@@ -5,6 +5,7 @@ package com.selimsahin.homework03.dto;
  */
 public record WeatherResponse(
         Request request,
-        Location location
+        Location location,
+        Current current
 ) {
 }
