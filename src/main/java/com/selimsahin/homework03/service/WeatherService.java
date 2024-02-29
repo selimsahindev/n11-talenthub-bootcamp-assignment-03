@@ -1,11 +1,11 @@
 package com.selimsahin.homework03.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.selimsahin.homework03.constants.Constants;
 import com.selimsahin.homework03.dto.WeatherDTO;
 import com.selimsahin.homework03.dto.WeatherResponse;
 import com.selimsahin.homework03.entity.Weather;
 import com.selimsahin.homework03.repository.WeatherRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,12 +22,6 @@ import java.util.Optional;
 @Service
 public class WeatherService {
 
-    @Value("${weather.api.url}")
-    private String weatherApiUrl;
-
-    @Value("${weather.api.access-key}")
-    private String weatherApiAccessKey;
-
     private final WeatherRepository weatherRepository;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -41,20 +35,29 @@ public class WeatherService {
     }
 
     public WeatherDTO getWeatherByCityName(String city) {
+        // Get the latest weather from the database if exists.
+        Optional<Weather> weatherOptional = weatherRepository.findFirstByRequestedCityNameOrderByUpdatedAtDesc(city);
 
-        Optional<Weather> weatherOptional = weatherRepository.findFirstByCityNameOrderByUpdatedAtDesc(city);
-
+        // If the weather is not found in the database, get it from the weather stack api.
         if (!weatherOptional.isPresent()) {
             return WeatherDTO.convert(getWeatherFromWeatherStackApi(city));
         }
 
-        return WeatherDTO.convert(weatherOptional.get());
+        // If the weather is older than 30 minutes, get it from the weather stack api.
+        if (weatherOptional.get().getUpdatedAt().isBefore(LocalDateTime.now().minusMinutes(30))) {
+            return WeatherDTO.convert(getWeatherFromWeatherStackApi(city));
+        }
+
+        return weatherOptional.map(weather -> {
+            if (weather.getUpdatedAt().isBefore(LocalDateTime.now().minusMinutes(30))) {
+                return WeatherDTO.convert(getWeatherFromWeatherStackApi(city));
+            }
+            return WeatherDTO.convert(weather);
+        }).orElseGet(() -> WeatherDTO.convert(getWeatherFromWeatherStackApi(city)));
     }
 
     private Weather getWeatherFromWeatherStackApi(String city) {
-        String url = this.weatherApiUrl + "?access_key=" + this.weatherApiAccessKey + "&query=" + city;
-
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(getWeatherStackUrl(city), String.class);
 
         try {
             WeatherResponse weatherResponse = objectMapper.readValue(responseEntity.getBody(), WeatherResponse.class);
@@ -87,5 +90,9 @@ public class WeatherService {
         return LocalDateTime.ofInstant(
                 instant,
                 Clock.systemDefaultZone().getZone());
+    }
+
+    private String getWeatherStackUrl(String city) {
+        return Constants.API_URL + Constants.ACCESS_KEY_PARAM + Constants.API_KEY + Constants.QUERY_KEY_PARAM + city;
     }
 }

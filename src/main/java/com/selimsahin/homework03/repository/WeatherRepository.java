@@ -10,5 +10,5 @@ import java.util.Optional;
  */
 public interface WeatherRepository extends JpaRepository<Weather, Long> {
 
-    Optional<Weather> findFirstByCityNameOrderByUpdatedAtDesc(String cityName);
+    Optional<Weather> findFirstByRequestedCityNameOrderByUpdatedAtDesc(String cityName);
 }
