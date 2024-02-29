@@ -1,35 +1,43 @@
 package com.selimsahin.homework03.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 
 /**
  * @author selimsahindev
  */
+@Entity
 public class Weather {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    private String id;
     private String requestedCityName;
     private String cityName;
-    private String countryName;
+    private String country;
     private Integer temperature;
     private LocalDateTime updatedAt;
     private LocalDateTime responseLocalTime;
 
-    public Long getId() {
+    public String getId() {
         return id;
+    }
+
+    public String getRequestedCityName() {
+        return requestedCityName;
     }
 
     public String getCityName() {
         return cityName;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getCountry() {
+        return country;
     }
 
     public Integer getTemperature() {
@@ -47,21 +55,21 @@ public class Weather {
     public Weather() {
     }
 
-    public Weather(Long id, String requestedCityName, String cityName, String countryName, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
+    public Weather(String id, String requestedCityName, String cityName, String country, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
         this.id = id;
         this.requestedCityName = requestedCityName;
         this.cityName = cityName;
-        this.countryName = countryName;
+        this.country = country;
         this.temperature = temperature;
         this.updatedAt = updatedAt;
         this.responseLocalTime = responseLocalTime;
     }
 
-    public Weather(String requestedCityName, String cityName, String countryName, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
+    public Weather(String requestedCityName, String cityName, String country, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
         this.id = null; // id is auto-generated
         this.requestedCityName = requestedCityName;
         this.cityName = cityName;
-        this.countryName = countryName;
+        this.country = country;
         this.temperature = temperature;
         this.updatedAt = updatedAt;
         this.responseLocalTime = responseLocalTime;
