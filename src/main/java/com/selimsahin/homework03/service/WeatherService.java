@@ -40,13 +40,11 @@ public class WeatherService {
 
         // If the weather is not found in the database, get it from the weather stack api.
         if (!weatherOptional.isPresent()) {
-            System.out.println("Weather not found in the database.");
             return WeatherDTO.convert(getWeatherFromWeatherStackApi(city));
         }
 
         // If the weather is older than 30 minutes, get it from the weather stack api.
         if (weatherOptional.get().getUpdatedAt().isBefore(LocalDateTime.now().minusMinutes(30))) {
-            System.out.println("Weather is older than 30 minutes.");
             return WeatherDTO.convert(getWeatherFromWeatherStackApi(city));
         }
 
@@ -65,7 +63,7 @@ public class WeatherService {
             WeatherResponse weatherResponse = objectMapper.readValue(responseEntity.getBody(), WeatherResponse.class);
             return saveWeather(city, weatherResponse);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -83,7 +81,7 @@ public class WeatherService {
             );
             return weatherRepository.save(weather);
         } catch (Exception e) {
-            throw new RuntimeException("Something happened: " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
