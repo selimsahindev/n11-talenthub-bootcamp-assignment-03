@@ -5,8 +5,11 @@ services:
     image: 'weather:latest'
     build:
       context: .
+    deploy:
+      mode: replicated
+      replicas: 3
     ports:
-      - "8080:8080"
+      - "8080-8082:8080"
     env_file:
       - .env
     environment:
