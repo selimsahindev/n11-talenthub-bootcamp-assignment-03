@@ -16,7 +16,7 @@ This project is a Spring Boot application that provides weather information for 
 ## Usage
 
 1. **Prerequisites:**
-   - JDK 11 or higher
+   - JDK 21
    - Docker and Docker Compose (optional for running with Docker)
 
 2. **Clone the Repository:**
