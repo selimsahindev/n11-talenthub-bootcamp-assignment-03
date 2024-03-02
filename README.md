@@ -1,4 +1,4 @@
-# 🌞 🌧 ⛈️ 🌈 🌦️ Weather API - Patika.dev Homework 03
+# 🌞 🌧 ⛈️ 🌦️ 🌈 Weather API - Patika.dev Homework 03
 
 This project is a Spring Boot application that provides weather information for cities using the weatherstack.com API. It allows users to retrieve current weather data for a specific city, with the capability to cache the data in an H2 database for 30 minutes to reduce external API calls.
 
@@ -27,25 +27,27 @@ This project is a Spring Boot application that provides weather information for 
 
 3. **Configure API Key:**
    Obtain an API key from [weatherstack.com](https://weatherstack.com/) and create a readme.md file in the same directory with the docker-compose.yml file and add
-     ```API_KEY=<your_api_key>``` property to your newly created .env file.
+  ```API_KEY=<your_api_key>``` property to your newly created .env file.
 
 4. **Run with Maven:**
-   `mvn spring-boot:run`
+   ```bash
+   mvn spring-boot:run
+   ```
 
-5. **Access API:**
-   - Once the application is running, you can access the API endpoints. For example:
-     <code>bash
-     curl http://localhost:8080/api/v1/weather/london
-     </code>
+6. **Access API:**
+   Once the application is running, you can access the API endpoints. For example:
+   ```bash
+   curl http://localhost:8080/api/v1/weather/london
+   ```
 
-6. **Docker Deployment:**
-   - If you prefer Docker, you can deploy the application using Docker Compose:
-     ```bash
-     docker-compose up
-     ```
+7. **Docker Deployment:**
+   If you prefer Docker, you can deploy the application using Docker Compose:
+   ```bash
+   docker-compose up
+   ```
    - This command will start multiple replicas of the service using ports 8080-8082.
 
-7. **Additional Information:**
+8. **Additional Information:**
    - Rate limiting configurations can be adjusted in `application.properties`.
    - Database configurations can also be modified in `application.properties`.
 
