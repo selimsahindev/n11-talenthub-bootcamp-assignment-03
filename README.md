@@ -51,7 +51,7 @@ This project is a Spring Boot application that provides weather information for 
    - Rate limiting configurations can be adjusted in `application.properties`.
    - Database configurations can also be modified in `application.properties`.
 
-# Entities
+## Entities & Services
 
 ### [**Weather**](src/main/java/com/selimsahin/homework03/entity/Weather.java) Entity:
 
@@ -64,8 +64,6 @@ This project is a Spring Boot application that provides weather information for 
 | `temperature`      | Current temperature in the city     |
 | `updatedAt`        | Last update time                    |
 | `responseLocalTime`| Local time of the weather response  |
-
-# Services
 
 ### [**WeatherService**](src/main/java/com/selimsahin/homework03/service/WeatherService.java)
 
