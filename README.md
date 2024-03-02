@@ -6,6 +6,18 @@ This project is a Spring Boot application that provides weather information for 
 
 ## Features
 - **Current Weather Retrieval:** Users can fetch the current weather information for a specific city by making GET requests to the `/api/v1/weather/{city}` endpoint.
+   - Example Response for Ankara, Turkey
+      ```json
+      {
+          "cityName": "Ankara",
+          "country": "Turkey",
+          "temperature": 16,
+          "updatedTime": "2024-03-02 12:21"
+      }
+      ```
+
+
+
 
 - **Rate Limiting:** The application is rate-limited using **Resilience4j**, allowing only 10 requests per minute to prevent abuse.
 
